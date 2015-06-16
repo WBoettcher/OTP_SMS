@@ -1,4 +1,12 @@
-
+/**
+ * MainActivity - Java file used to operate the MainActivity for the app.  
+ * It is currently acting as a testing activity; it is the activity that launches when the program is run on a device.
+ * The code is currently exploring how to integrate Intents into a program.
+ * Status tracker:
+ * [X]  Show user phone's native contact picker after a button push
+ * []   Allow user to select which phone number to use if a contact has multiple registered
+ * []   Print the selected phone number in the top line of the interface.
+ **/
 
 package otp.sms;
 
