@@ -45,15 +45,22 @@ public class MainActivity extends Activity {
     }
 
     /**
-     * Function that handles when the Send button is pushed
+     * Function that handles when the contact button is pushed
      *
      * @param v - the View that the button is in (needs review later)
      */
-    public void onSendButtonPushed(View v) {
+    public void onContactButton(View v) {
         Intent contactPickerIntent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
         startActivityForResult(contactPickerIntent, 1001);
         //TODO: Extract relevant data from the contact that the user selects in the contact picker.
     }
 
-
+    /**
+     * Dummy function that checks the "sent" box after the send button is pushed.
+     * Could later be adapted to actually check whether the message has been sent and potentially display an error message if it isn't.
+     * @param v - the View that the button is in (needs review)
+     */
+    public void onSendButton(View v){
+        sentBox.setChecked(true);
+    }
 }
