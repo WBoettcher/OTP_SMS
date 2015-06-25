@@ -11,23 +11,33 @@
 package otp.sms;
 
 import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.telephony.SmsManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
-    CheckBox sentBox;
+    TextView indicator;
+    EditText phoneNumber;
+    EditText smsContents;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        sentBox = (CheckBox) findViewById(R.id.sentBox);
+        indicator = (TextView) findViewById(R.id.indicator);
+        phoneNumber = (EditText) findViewById(R.id.phoneNumber);
+        smsContents = (EditText) findViewById(R.id.smsContents);
     }
 
     @Override
@@ -64,11 +74,34 @@ public class MainActivity extends Activity {
     }
 
     /**
-     * Dummy function that checks the "sent" box after the send button is pushed.
-     * Could later be adapted to actually check whether the message has been sent and potentially display an error message if it isn't.
+     * Function that sends the message in the smsContents field to the phone number in the phoneNumber field.
+     * Also checks whether the send was successful, and indicates send-failure.
      * @param v - the View that the button is in (needs review)
      */
     public void onSendButton(View v){
-        sentBox.setChecked(true);
+        //Pulls data from the form in the UI
+        String _destinationNumber = phoneNumber.getText().toString();
+        String messageText = smsContents.getText().toString();
+
+        //Creates a PendingIntent object to listen for when the SMS has arrived
+        PendingIntent sentPendingIntent = PendingIntent.getBroadcast(this, 0, new Intent("SMS_SENT"), 0);
+        //Creates a SmsManager object to handle sending the message; it uses the default settings.
+        SmsManager smsManager = SmsManager.getDefault();
+
+        //Listens for SMS_SENT intents to check if the send occurred successfully.
+        registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (getResultCode() == Activity.RESULT_OK) {
+                    indicator.setText("Message Sent");
+                } else {
+                    indicator.setText("Message Failed");
+                }
+            }
+        }, new IntentFilter("SMS_SENT"));
+
+        smsManager.sendTextMessage(_destinationNumber, null, messageText, sentPendingIntent, null);
+        indicator.setText("Message Sending");
+
     }
 }

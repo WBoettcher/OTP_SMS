@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="otp.sms" >
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-sdk
         android:minSdkVersion="16"
         android:targetSdkVersion="16"/>
@@ -20,5 +21,6 @@
             </intent-filter>
         </activity>
     </application>
+
 
 </manifest>
