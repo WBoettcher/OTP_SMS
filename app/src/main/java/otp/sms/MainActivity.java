@@ -41,13 +41,6 @@ public class MainActivity extends Activity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -103,5 +96,15 @@ public class MainActivity extends Activity {
         smsManager.sendTextMessage(_destinationNumber, null, messageText, sentPendingIntent, null);
         indicator.setText("Message Sending");
 
+    }
+
+    /**
+     * Function that bounces to another activity in the app; used to test transitioning between different activities in the
+     * @param v the view that the button is in.
+     */
+    public void onBounceButton(View v){
+        //Creates an explicit intent in preparation for launching the BounceActivity.
+        Intent bounceIntent = new Intent(this, BounceActivity.class);
+        startActivity(bounceIntent);
     }
 }
