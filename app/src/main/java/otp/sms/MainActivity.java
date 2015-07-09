@@ -18,7 +18,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v4.content.LocalBroadcastManager;
 import android.telephony.SmsManager;
+import android.telephony.SmsMessage;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,8 +32,7 @@ public class MainActivity extends Activity {
     TextView indicator;
     EditText phoneNumber;
     EditText smsContents;
-
-
+    BroadcastReceiver smsReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,21 +40,36 @@ public class MainActivity extends Activity {
         indicator = (TextView) findViewById(R.id.indicator);
         phoneNumber = (EditText) findViewById(R.id.phoneNumber);
         smsContents = (EditText) findViewById(R.id.smsContents);
-    }
+        registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Log.v("Broadcast Receiver", "Message Received");
+                //Gets the bundle associated with the incoming Intent
+                Bundle incomingBundle = intent.getExtras();
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+                //Names the array for the incoming messages
+                SmsMessage[] receivedMessageParts;
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+                String parsedMessage = null;
 
-        return super.onOptionsItemSelected(item);
+                //Checks to make sure there is a meaningful bundle to parse
+                if (incomingBundle != null) {
+                    //Gets the relevant part of the intent
+                    Object[] pdus = (Object[]) incomingBundle.get("pdus");
+                    //Sets the parsedMessages array to the correct length
+                    receivedMessageParts = new SmsMessage[pdus.length];
+
+                    //Cycles through the received messages in the bundle
+                    for (int i = 0; i < receivedMessageParts.length; i++) {
+                        //Converts the PDU to an SmsMessage object
+                        receivedMessageParts[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
+                        parsedMessage += "From " + receivedMessageParts[i].getOriginatingAddress() + " : ";
+                        parsedMessage += receivedMessageParts[i].getMessageBody()+ "\n";
+                    }
+                }
+                indicator.setText("Message Received");
+            }
+        }, new IntentFilter("android.provider.Telephony.SMS_RECEIVED"));
     }
 
     /**
@@ -107,4 +124,6 @@ public class MainActivity extends Activity {
         Intent bounceIntent = new Intent(this, BounceActivity.class);
         startActivity(bounceIntent);
     }
+
+
 }
