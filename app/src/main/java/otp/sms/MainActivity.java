@@ -1,11 +1,7 @@
 /**
  * MainActivity - Java file used to operate the MainActivity for the app.  
  * It is currently acting as a testing activity; it is the activity that launches when the program is run on a device.
- * The code is currently exploring how to integrate Intents into a program.
- * Status tracker:
- * [X]  Show user phone's native contact picker after a button push
- * []   Allow user to select which phone number to use if a contact has multiple registered
- * []   Print the selected phone number in the top line of the interface.
+ * The code is currently exploring the use of BroadcastReceivers to interface with SMS messages.
  **/
 
 package otp.sms;
@@ -18,12 +14,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.support.v4.content.LocalBroadcastManager;
 import android.telephony.SmsManager;
-import android.telephony.SmsMessage;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,42 +23,23 @@ public class MainActivity extends Activity {
     TextView indicator;
     EditText phoneNumber;
     EditText smsContents;
-    BroadcastReceiver smsReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Creates a local reference to the different elements of the UI.
         indicator = (TextView) findViewById(R.id.indicator);
         phoneNumber = (EditText) findViewById(R.id.phoneNumber);
         smsContents = (EditText) findViewById(R.id.smsContents);
+
+        //Registers a new receiver, as specified by the argument "new BroadcastReceiver(){...}".
         registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                Log.v("Broadcast Receiver", "Message Received");
-                //Gets the bundle associated with the incoming Intent
-                Bundle incomingBundle = intent.getExtras();
-
-                //Names the array for the incoming messages
-                SmsMessage[] receivedMessageParts;
-
-                String parsedMessage = null;
-
-                //Checks to make sure there is a meaningful bundle to parse
-                if (incomingBundle != null) {
-                    //Gets the relevant part of the intent
-                    Object[] pdus = (Object[]) incomingBundle.get("pdus");
-                    //Sets the parsedMessages array to the correct length
-                    receivedMessageParts = new SmsMessage[pdus.length];
-
-                    //Cycles through the received messages in the bundle
-                    for (int i = 0; i < receivedMessageParts.length; i++) {
-                        //Converts the PDU to an SmsMessage object
-                        receivedMessageParts[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
-                        parsedMessage += "From " + receivedMessageParts[i].getOriginatingAddress() + " : ";
-                        parsedMessage += receivedMessageParts[i].getMessageBody()+ "\n";
-                    }
-                }
+                //Changes the UI upon receipt of a message.
                 indicator.setText("Message Received");
+                //TODO: parse the message body and put it into the indicator.
             }
         }, new IntentFilter("android.provider.Telephony.SMS_RECEIVED"));
     }
@@ -122,6 +94,7 @@ public class MainActivity extends Activity {
     public void onBounceButton(View v){
         //Creates an explicit intent in preparation for launching the BounceActivity.
         Intent bounceIntent = new Intent(this, BounceActivity.class);
+        //Executes that explicit intent
         startActivity(bounceIntent);
     }
 
