@@ -9,6 +9,9 @@ import android.telephony.SmsMessage;
  * Created by aharris on 7/15/15.
  */
 public class InternalSmsMessage {
+
+    private static final String TAG = "InternalSmsMessage";
+
     private String sender;
     private String messageText;
     private long receivedAt;

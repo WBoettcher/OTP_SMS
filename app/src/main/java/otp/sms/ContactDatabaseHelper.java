@@ -13,7 +13,7 @@ public class ContactDatabaseHelper extends SQLiteOpenHelper {
 
 
     //TAG for Logcat.
-    private final String TAG = this.getClass().getSimpleName();
+    private final static String TAG = "ContactDatabaseHelper";
     //DB Version
     private static final int DATABASE_VERSION = 1;
 
@@ -29,7 +29,7 @@ public class ContactDatabaseHelper extends SQLiteOpenHelper {
     public static final String KEY_PHONENUMBER = "phonenumber";
     public static final String KEY_CODE = "code";
 
-    private static final String CREATE_TABLE_CONTACTS = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT, %s TEXT", TABLE_CONTACTS, KEY_ID, KEY_NAME, KEY_PHONENUMBER, KEY_CODE);
+    private static final String CREATE_TABLE_CONTACTS = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT, %s TEXT)", TABLE_CONTACTS, KEY_ID, KEY_NAME, KEY_PHONENUMBER, KEY_CODE);
 
     public ContactDatabaseHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -39,7 +39,7 @@ public class ContactDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_CONTACTS);
-        Log.d(TAG, CREATE_TABLE_CONTACTS);
+        Log.d(TAG, "Table Created");
     }
 
     @Override

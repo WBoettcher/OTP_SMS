@@ -14,7 +14,7 @@ import android.util.Log;
  * Created by aharris on 7/15/15.
  */
 public class SmsDatabaseHelper extends SQLiteOpenHelper {
-    private final String TAG = this.getClass().getSimpleName();
+    private static final String TAG = "SmsDatabaseHelper";
     //DB Version
     private static final int DATABASE_VERSION = 1;
 

@@ -10,6 +10,8 @@ import android.widget.ListView;
 
 public class BounceActivity extends Activity{
 
+    private static final String TAG = "BounceActivity";
+
     private ListView listView;
     private final String[] testDataset = {"Correct", "Horse", "Battery", "Staple"};
     private ArrayAdapter<String> testAdapter;

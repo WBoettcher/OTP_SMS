@@ -22,6 +22,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
+    private static final String TAG = "MainActivity";
+
     TextView indicator;
     EditText phoneNumber;
     EditText smsContents;
@@ -49,11 +51,12 @@ public class MainActivity extends Activity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 //Changes the UI upon receipt of a message.
-                indicator.setText("Message Received");
+                indicator.setText("Message Received"); //Indicates that a new message has been received.
                 Bundle messageBundle = intent.getExtras();
                 //Only saves the message to the database if the bundle is non-null
                 if(messageBundle != null) {
-                    saveMessage(messageBundle);
+                    //TODO implement a method that saves the message after it is received
+                    //saveMessage(messageBundle);
                 }
             }
         }, new IntentFilter("android.provider.Telephony.SMS_RECEIVED"));
@@ -70,9 +73,9 @@ public class MainActivity extends Activity {
         //Goes through each pdu in the bundle and creates an SmsMessage from them
         SmsMessage currentMessage;
         InternalSmsMessage messageWrapped;
-        //TODO Replace following loop with for-each loop to simplify code.
-        for(int i = 0; i < pduObjects.length; i++){
-            currentMessage = SmsMessage.createFromPdu((byte[]) pduObjects[i]);
+        //Loops through the pduObjects and creates an SmsMessage from each one
+        for(Object pduObject : pduObjects){
+            currentMessage = SmsMessage.createFromPdu((byte[])pduObject);
             messageWrapped = new InternalSmsMessage(currentMessage); //Wraps the SmsMessage in an InternalSmsMessage layer
             smsDb.addMessage(messageWrapped); //Saves the message in the database
         }

@@ -2,6 +2,7 @@ package otp.sms;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -14,6 +15,8 @@ import android.widget.ListView;
 
 public class ContactInterface extends Activity {
 
+    private static final String TAG = "ContactInterface";
+
     private ContactDatabaseHelper contact_db;
     private EditText name;
     private EditText phoneNumber;
@@ -24,7 +27,8 @@ public class ContactInterface extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_interface);
-        contact_db = new ContactDatabaseHelper(this);
+        contact_db = new ContactDatabaseHelper(getApplicationContext());
+        Log.d(TAG, "Contact Database Helper constructed");
         name = (EditText) findViewById(R.id.c_name);
         phoneNumber = (EditText) findViewById(R.id.c_phoneNumber);
         code = (EditText) findViewById(R.id.c_code);
