@@ -18,7 +18,7 @@
         android:weightSum="1">
 
         <EditText
-            android:id="@+id/phoneNumber"
+            android:id="@+id/c_phoneNumber"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/contactButton"
             android:layout_alignRight="@+id/contactButton"
-            android:layout_below="@+id/phoneNumber"
+            android:layout_below="@+id/c_phoneNumber"
             android:layout_column="0"
             android:layout_row="1"
             android:layout_weight="0.03"
@@ -48,13 +48,14 @@
             android:ems="10"
             android:gravity="top"
             android:hint="Message Contents"
-            android:inputType="textMultiLine" />
+            android:inputType="textMultiLine"
+            android:layout_above="@+id/indicator" />
 
         <Button
             android:id="@+id/contactButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/phoneNumber"
+            android:layout_alignBottom="@+id/c_phoneNumber"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_column="0"
@@ -99,15 +100,16 @@
             android:layout_alignParentStart="true"
             android:onClick="onBounceButton" />
 
-        <TextView
+        <ListView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/receivedMessage"
-            android:layout_below="@+id/smsContents"
+            android:id="@+id/receivedMessagesList"
+            android:layout_alignTop="@+id/indicator"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:layout_above="@+id/sendButton" />
 
     </RelativeLayout>
 </RelativeLayout>
