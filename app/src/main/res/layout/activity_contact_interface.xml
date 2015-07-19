@@ -1,71 +1,92 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="otp.sms.ContactInterface">
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
         android:id="@+id/c_name"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/c_phoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/c_phoneNumber"
-        android:hint="Name" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/c_phoneNumber"
+        android:ems="10"
+        android:hint="Name"
+        android:inputType="textPersonName" />
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="phone"
-        android:ems="10"
         android:id="@+id/c_phoneNumber"
-        android:layout_below="@+id/c_name"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:hint="Phone Number"
-        android:layout_alignRight="@+id/c_code"
-        android:layout_alignEnd="@+id/c_code" />
-
-    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/c_code"
-        android:layout_below="@+id/c_phoneNumber"
+        android:layout_alignEnd="@+id/c_code"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:hint="Code"
+        android:layout_alignRight="@+id/c_code"
+        android:layout_below="@+id/c_name"
+        android:ems="10"
+        android:hint="Phone Number"
+        android:inputType="phone" />
+
+    <EditText
+        android:id="@+id/c_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/c_phoneNumber"
+        android:ems="10"
+        android:hint="Code"
+        android:inputType="number" />
 
     <Button
+        android:id="@+id/Submit"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Submit Contact"
-        android:id="@+id/Submit"
-        android:layout_below="@+id/c_code"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_below="@+id/c_code"
         android:hint="Add"
-        android:onClick="onSubmitButton" />
+        android:onClick="onSubmitButton"
+        android:text="Submit Contact" />
 
     <ListView
+        android:id="@+id/contactsListView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listView"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/Submit" />
+
+    <Button
+        android:id="@+id/refreshButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/Submit"
+        android:onClick="onRefreshButton"
+        android:text="RefreshList" />
+
+    <Button
+        android:id="@+id/dropDB"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/Submit"
+        android:layout_centerHorizontal="true"
+        android:onClick="onDeleteDBButton"
+        android:text="Drop DB" />
 
 </RelativeLayout>
